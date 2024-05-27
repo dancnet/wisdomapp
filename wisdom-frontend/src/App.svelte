@@ -6,6 +6,7 @@
     import RandomNode from '$lib/RandomNode.svelte';
     import Quiz from '$lib/Quiz.svelte';
     import Search from '$lib/Search.svelte';
+    import ViewNode from '$lib/ViewNode.svelte';
     import { show_modal } from '$lib/store';
 </script>
 
@@ -20,6 +21,8 @@
 
 {#if $show_modal === 'edit_node'}
 <EditNode />
+{:else if $show_modal === 'view_node'}
+<ViewNode />
 {:else if $show_modal === 'manage_mindmaps'}
 <ManageMindmaps />
 {:else if $show_modal === 'random_node'}

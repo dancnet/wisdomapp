@@ -99,10 +99,22 @@
                 handles: {
                     'edit_node': (jm, e) => {
                         if ($node_selected !== null) show_modal.set('edit_node');
+                    },
+                    'view_node': (jm, e) => {
+                        if ($node_selected !== null) show_modal.set('view_node');
+                    },
+                    'quiz': (jm, e) => {
+                        if ($node_selected !== null) show_modal.set('quiz');
+                    },
+                    'random_node': (jm, e) => {
+                        if ($node_selected !== null) show_modal.set('random_node');
                     }
                 },
                 mapping: {
-                    edit_node: 69
+                    edit_node: 69,
+                    view_node: 86,
+                    quiz: 81,
+                    random_node: 82
                 }
             }
         };

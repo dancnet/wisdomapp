@@ -1,7 +1,7 @@
 <script>
     import Modal from "$lib/Modal.svelte";
     import { Random } from "$lib/random";
-    import Editor from "$lib/Editor.svelte";
+    import Viewer from "$lib/Viewer.svelte";
 
     let random_node = null;
     let position, length, node;
@@ -22,9 +22,7 @@
         <div class="w3-center w3-border">
             <h3>{node.topic}</h3>
         </div>
-        {#key position}
-            <Editor value={node.markdown} readonly={true} />
-        {/key}
+        <Viewer markdown={node.markdown} />
         {:else}
         <div class="w3-container w3-section">Nothing to show...</div>
         {/if}

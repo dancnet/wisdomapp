@@ -1,5 +1,7 @@
 <script>
     import { node_selected, show_modal, mindmaps_data, selected_mindmap, nodes_data } from '$lib/store';
+    const view = () => {show_modal.set('view_node')};
+    const edit = () => show_modal.set('edit_node');
     const random = () => {show_modal.set('random_node')};
     const quiz = () => {show_modal.set('quiz')};
     const search = () => {show_modal.set('search')};
@@ -13,9 +15,10 @@
 
 <div class="w3-bar w3-pink">
     {#if $node_selected}
+    <button class="w3-bar-item w3-btn" on:click={view}><i class="fa-regular fa-file-lines"></i> View</button>
+    <button on:click={edit} class="w3-bar-item w3-btn"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
     <button class="w3-bar-item w3-btn" on:click={random}><i class="fa-solid fa-dice"></i> Random</button>
     <button class="w3-bar-item w3-btn" on:click={quiz}><i class="fa-regular fa-lightbulb"></i> Quiz</button>
-    <button on:click={() => show_modal.set('edit_node')} class="w3-bar-item w3-btn"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
     {:else}
     <div class="w3-dropdown-hover">
         <button class="w3-button w3-pink w3-hover-pink"><b>Wisdom App</b> <i class="fa fa-caret-down"></i></button>

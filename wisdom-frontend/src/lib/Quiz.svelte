@@ -1,9 +1,8 @@
 <script>
     import Modal from "$lib/Modal.svelte";
     import { Random } from "$lib/random";
-    import Editor from "$lib/Editor.svelte";
+    import Viewer from "$lib/Viewer.svelte";
     import { query } from "$lib/api";
-    import { show } from "jsmind";
 
     let quiz, position, length, question, answer;
     const next = () => {
@@ -24,13 +23,11 @@
 <Modal>
     <div>
         {#if question}
-        {#key question.id}
-        <Editor value={question.question} readonly={true} />
+        <Viewer markdown={question.question} />
         {#if answer !== null}
         <hr>
-        <Editor value={answer} readonly={true} />
+        <Viewer markdown={answer} />
         {/if}
-        {/key}
         {:else}
         <div class="w3-container w3-section">Nothing to show...</div>
         {/if}
