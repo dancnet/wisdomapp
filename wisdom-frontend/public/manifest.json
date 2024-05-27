@@ -1,0 +1,9 @@
+{
+    "name": "Wisdom App",
+    "short_name": "Wisdom",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#e91e63",
+    "description": "Harness the power of minimalism and mind maps with Wisdom App. Your journey to wisdom starts here."
+}
