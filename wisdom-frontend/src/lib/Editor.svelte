@@ -20,6 +20,7 @@
     onMount(() => {
         editor = CodeMirror.fromTextArea(textArea, {
             lineNumbers: true,
+            lineWrapping: true,
             mode: 'markdown',
             readOnly: readonly
         });
@@ -42,7 +43,8 @@
         min-height: 55px;
     }
     :global(.CodeMirror-linewidget > img) {
-        max-width: 100%;
+        max-width: 80%;
+        max-height: 250px;
         height: auto;
         display: block;
         margin: 0 auto;

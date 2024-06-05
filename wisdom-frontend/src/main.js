@@ -1,4 +1,5 @@
-import './w3.css'
+import './global.css';
+import './w3.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import App from './App.svelte'
 
