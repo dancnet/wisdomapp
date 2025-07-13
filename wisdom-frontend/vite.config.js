@@ -9,5 +9,12 @@ export default defineConfig({
     alias: {
       $lib: path.resolve('./src/lib')
     }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000'
+      }
+    }
   }
 })
