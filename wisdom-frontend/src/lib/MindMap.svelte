@@ -1,9 +1,10 @@
 <script>
     import { onMount } from 'svelte';
-    import jsMind from 'jsmind';
+    import jsMind, { node } from 'jsmind';
     import 'jsmind/draggable-node';
     import 'jsmind/style/jsmind.css';
     import { node_selected, show_modal, selected_mindmap } from '$lib/store';
+    import { bus } from '$lib/bus'; 
     import { query } from '$lib/api';
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
@@ -11,30 +12,42 @@
     let jmContainer;
     let jm;
 
+    bus.on('insert_node', () => {
+        const node = jm.get_node($node_selected);
+        add_new_node({
+            parentid: $node_selected,
+            direction: node.direction
+        });
+    });
+
     const add_new_node = data => {
         let parent = jm.get_node(data.parentid);
         let background_color = parent.data['background-color'];
         let text_color = parent.data['foreground-color'];
         query(`/mindmaps/${$selected_mindmap}/nodes/`, 'POST', {background_color, text_color, ...data}).then(result => {
-            console.log(result);
+            // console.log(result);
             node_selected.set(result.id);
-            dispatch('refresh');
+            location.reload();
+            // dispatch('refresh');
         });
     }
 
     const edit_node = (id, data) => {
         query(`/nodes/${id}`, 'PUT', data).then(result => {
-            console.log(result);
-            dispatch('refresh');
+            // console.log(result);
+            location.reload();
+            // dispatch('refresh');
         });
     }
 
     const remove_node = async id => {
         if (confirm("Are you sure you want to delete that node?")) {
             let result = await query(`/nodes/${id}`, 'DELETE')
-            console.log(result);
+            // console.log(result);
         }
-        dispatch('refresh');
+        location.reload();
+        // dispatch('refresh');
+
     }
 
     const mindnode_update = data => {

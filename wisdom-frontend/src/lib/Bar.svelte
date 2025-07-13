@@ -1,11 +1,13 @@
 <script>
     import { node_selected, show_modal, mindmaps_data, selected_mindmap, nodes_data } from '$lib/store';
+    import { bus } from '$lib/bus'; 
     const view = () => {show_modal.set('view_node')};
     const edit = () => show_modal.set('edit_node');
     const random = () => {show_modal.set('random_node')};
     const quiz = () => {show_modal.set('quiz')};
     const search = () => {show_modal.set('search')};
     const manage_mindmaps = () => {show_modal.set('manage_mindmaps')};
+    const insertxxx = () => {bus.emit('insert_node')};
     mindmaps_data.reload();
     const set_mindmap = id => {
         selected_mindmap.set(id);
@@ -15,6 +17,7 @@
 
 <div class="w3-bar w3-pink">
     {#if $node_selected}
+    <button class="w3-bar-item w3-btn" on:click={insertxxx}><i class="fa-regular fa-copy"></i> Insert</button>
     <button class="w3-bar-item w3-btn" on:click={view}><i class="fa-regular fa-file-lines"></i> View</button>
     <button on:click={edit} class="w3-bar-item w3-btn"><i class="fa-regular fa-pen-to-square"></i> Edit</button>
     <button class="w3-bar-item w3-btn" on:click={random}><i class="fa-solid fa-dice"></i> Random</button>
