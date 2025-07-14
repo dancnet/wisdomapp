@@ -4,15 +4,16 @@
     import 'jsmind/draggable-node';
     import 'jsmind/style/jsmind.css';
     import { node_selected, show_modal, selected_mindmap } from '$lib/store';
-    import { bus } from '$lib/bus'; 
+    import { bus_listen } from '$lib/bus'; 
     import { query } from '$lib/api';
     import { createEventDispatcher } from 'svelte';
+    import { onDestroy } from 'svelte';
     const dispatch = createEventDispatcher();
     export let data;
     let jmContainer;
     let jm;
 
-    bus.on('insert_node', () => {
+    const insert_node_listener_remover = bus_listen('insert_node', () => {
         const node = jm.get_node($node_selected);
         add_new_node({
             parentid: $node_selected,
@@ -20,33 +21,36 @@
         });
     });
 
+    const remove_node_listener_remover = bus_listen('remove_node', () => {
+        remove_node($node_selected);
+    });
+
+    onDestroy(() => {
+        insert_node_listener_remover();
+        remove_node_listener_remover();
+    });
+
     const add_new_node = data => {
         let parent = jm.get_node(data.parentid);
         let background_color = parent.data['background-color'];
         let text_color = parent.data['foreground-color'];
         query(`/mindmaps/${$selected_mindmap}/nodes/`, 'POST', {background_color, text_color, ...data}).then(result => {
-            // console.log(result);
             node_selected.set(result.id);
-            location.reload();
-            // dispatch('refresh');
+            dispatch('refresh');
         });
     }
 
     const edit_node = (id, data) => {
         query(`/nodes/${id}`, 'PUT', data).then(result => {
-            // console.log(result);
-            location.reload();
-            // dispatch('refresh');
+            dispatch('refresh');
         });
     }
 
     const remove_node = async id => {
         if (confirm("Are you sure you want to delete that node?")) {
             let result = await query(`/nodes/${id}`, 'DELETE')
-            // console.log(result);
         }
-        location.reload();
-        // dispatch('refresh');
+        dispatch('refresh');
 
     }
 
